@@ -23,13 +23,13 @@ def run_ffuf(wordlist, url):
 
 
 # Usage
-wordlist = r"C:\Users\Vyacheslav\PycharmProjects\FFuF_Trainee\Dicts\DBSQLInj\MSSQL-Enumeration.fuzzdb.txt"
+wordlist = r"C:\Users\Vyacheslav\PycharmProjects\FFuF_Trainee\Dicts\API\httparchive_directories_1m_2024_05_28.txt"
 #DICT
 #
 
 
-target_url = "http://guap.ru"  # FUZZ will be added automatically
-print(f"ffuf -w {wordlist} -u {target_url}FUZZ ")
+target_url = "http://pedliceum.altai.ru/"  # FUZZ will be added automatically
+print(f"ffuf -w {wordlist} -u {target_url} -H  ")
 
 
 
