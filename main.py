@@ -25,4 +25,5 @@ def run_ffuf(wordlist, url):
 # Usage
 wordlist = r"C:\Users\Vyacheslav\PycharmProjects\FFuF_Trainee\Dicts\DBSQLInj\MSSQL-Enumeration.fuzzdb.txt"
 target_url = "http://guap.ru"  # FUZZ will be added automatically
-run_ffuf(wordlist, target_url)
+print(f"ffuf -w {wordlist} -u {target_url}FUZZ")
+#run_ffuf(wordlist, target_url)
