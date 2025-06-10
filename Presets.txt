@@ -22,10 +22,16 @@ ffuf -w /path/to/needed-dict -u https://url -X POST -d "username=admin\&password
 //удаляет ответы с кодом 401 - если значение параметра не сущесвует
 
 7. Post data double fuzzing with json
-ffuf -w /path/to/passwords:FUZZ1 -w /path/to/usernames/FUZZ2 -u https://url -X POST -H "Content-Type: application/jspn" -d "username:FUZZ1, "password=FUZZ2"
+ffuf -w /path/to/passwords:FUZZ1 -w /path/to/usernames/FUZZ2 -u https://url -X POST -H "Content-Type: application/json" -d "username:FUZZ1, "password=FUZZ2"
 
 8.API endpoints FUZZING with params and values
 8.1 попробую написать список команд через GetAllUrls(go) чтобы получить список api
+#В целом можно использовать  |gau url|, но он выдает вообще все ответы, включая всякий не очень важный мусор, так что лучше с фильтрацией
+по типу findstr(winds) или grep(linx), оттуда так же можно вывести все это дело в словарь, и потом с этим словарем вызвать команду ниже,
+подставив туда вместо api как раз этот словарь.
+
+gau https://url |findstr /i /v "api login username password etc.." | sort /unique > path/to/apiendpoints.txt
+ffuf -w /path/to/apinednpoints.txt:FUZZ1 -w /path/to/params:FUZZ2 -w /path/to/values:FUZZ3 -u https://url/FUZZ1?FUZZ2=FUZZ3
 
 8.2 можно запустить предварительно
 ffuf -w /path/to/api -u https:/url/FUZZ
@@ -33,7 +39,4 @@ ffuf -w /path/to/api -u https:/url/FUZZ
 
 8.3
 ffuf -w /path/to/APIendpoints.txt:FUZZ1 -w /path/to/params:FUZZ2 -w /path/to/values -u https://url/FUZZ1?FUZZ2=FUZZ3
-
-
-9
 
