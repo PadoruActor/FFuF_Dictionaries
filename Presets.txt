@@ -1,3 +1,15 @@
+Базовые настройки:
+-w (путь к словарю, по которому будет проходить фаззинг)
+-u (ссылка на сайт, который будет подвержен фаззингу (может содержать ключевое слово FUZZ)
+-od (путь к фалу, в котором будет сохранен результат)
+-of (формат файла с результатами)
+-fs (удаление результатов выбранного размера)
+-fc (удаление результатов с выбранным кодом ответа)
+-X (метод HTTP запроса)
+-d (информация при POST  http запросе)
+-H (Headers(заголовок) HTTP запроса)
+
+
 1. Фазинг базовых директорий
 ffuf -w /path/to/common.txt -u url/FUZZ -od /path/to/save -of json
 
@@ -7,41 +19,25 @@ ffuf -w /path/to/subdomains.txt -u http://FUZZ.url/ -od /path/to/save -of json
 
 3. Фазинг параметров
 ffuf -w /path/to/burp-parameter-names.txt -u https://url/path?FUZZ=test_value -od /path/to/save -of json -fs !size!
-//удаляет ответы с размером !size! (если не существует такого параметра)
-(рекомендую запустить -maxtime 1 и посмотреть размер ответа, т.к. размер ответа зависит от сайта)
+//удаляет ответы с размером size (если не существует такого параметра)
 
 4. Фазинг значений параметров
-ffuf -w /path/to/needed-dict -u https://url/path?value=FUZZ -od /path/to/save -of json -fc 401
+ffuf -w /path/to/parameters.txt -u https://url/path?value=FUZZ -od /path/to/save -of json -fc 401
 // удаляет ответы с кодом 401 - если значение параметра не существует
 
-5. Одновременный фазинг значений и параметров
+5. Parameters and values double fuzzing
 ffuf -w /path/to/burp-parameter-names.txt:FUZZ1 -w /path/to/needed-dict:FUZZ2 -u https://url/path?FUZZ1=FUZZ2 -fs !size! -fc 401
 
 6. POST data fuzzing
 ffuf -w /path/to/needed-dict -u https://url -X POST -d "username=admin\&password=FUZZ" -od /path/to/save -of json -fc 401
-//удаляет ответы с кодом 401 - если значение параметра не сущесвует
 
 7. Post data double fuzzing with json
 ffuf -w /path/to/passwords:FUZZ1 -w /path/to/usernames/FUZZ2 -u https://url -X POST -H "Content-Type: application/json" -d "username:FUZZ1, "password=FUZZ2"
 
-8.API endpoints FUZZING with params and values
-8.1 попробую написать список команд через GetAllUrls(go) чтобы получить список api
-#В целом можно использовать  |gau url|, но он выдает вообще все ответы, включая всякий не очень важный мусор, так что лучше с фильтрацией
-по типу findstr(winds) или grep(linx), оттуда так же можно вывести все это дело в словарь, и потом с этим словарем вызвать команду ниже,
-подставив туда вместо api как раз этот словарь.
-
-gau https://url |findstr /i /v "api login username password etc.." | sort /unique > path/to/apiendpoints.txt
+8.API endpoints FUZZING with parameters and values
 ffuf -w /path/to/apinednpoints.txt:FUZZ1 -w /path/to/params:FUZZ2 -w /path/to/values:FUZZ3 -u https://url/FUZZ1?FUZZ2=FUZZ3
 
-8.2 можно запустить предварительно
-ffuf -w /path/to/api -u https:/url/FUZZ
-и уже эти эндпоинты использовать
-
-8.3
-ffuf -w /path/to/APIendpoints.txt:FUZZ1 -w /path/to/params:FUZZ2 -w /path/to/values -u https://url/FUZZ1?FUZZ2=FUZZ3
-
-9. Фаззинг с помощью http запроса
-Есть файл http.txt - с запросом
-В POST / Headers этого файла должно находится ключевое слово FUZZ, которое работает так же, как и при обычном фаззинге
-(Так же можно FUZZ поставить в url, method, но зачем?)
+9. HTTP request fuzzing
+Есть файл http.txt – с сырым http запросом
+В POST / Headers / URL этого файла должно находится ключевое слово FUZZ, которое работает так же, как и при обычном фаззинге
 ffuf -request /path/to/http.txt -w /path/to/postdatafuzz.txt
