@@ -1,0 +1,29 @@
+POST /suggest/suggest-example HTTP/2
+Host: example.ru
+accept: */*
+accept-language: ru,en;q=0.9
+cookie: example
+device-memory: 8
+downlink: 10
+dpr: 1
+ect: 4g
+priority: u=1, i
+referer: https://yandex.ru/search/?text=FFUF&lr=2&clid=10472851-70&win=674
+rtt: 0
+sec-ch-ua: "Chromium";v="134", "Not:A-Brand";v="24", "YaBrowser";v="25.4", "Yowser";v="2.5"
+sec-ch-ua-arch: "x86"
+sec-ch-ua-bitness: "64"
+sec-ch-ua-full-version: "25.4.4.576"
+sec-ch-ua-full-version-list: "Chromium";v="134.0.6998.576", "Not:A-Brand";v="24.0.0.0", "YaBrowser";v="25.4.4.576", "Yowser";v="2.5"
+sec-ch-ua-mobile: ?0
+sec-ch-ua-model: ""
+sec-ch-ua-platform: "Windows"
+sec-ch-ua-platform-version: "15.0.0"
+sec-ch-ua-wow64: ?0
+sec-ch-viewport-width: 439
+sec-fetch-dest: empty
+sec-fetch-mode: cors
+sec-fetch-site: same-origin
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 YaBrowser/25.4.0.0 Safari/537.36
+viewport-width: 439
+y-browser-experiments: MTI3MDYyOSwwLC0xOzEyNDk1MjQsMCw1Mg==
