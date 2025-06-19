@@ -40,3 +40,8 @@ ffuf -w /path/to/api -u https:/url/FUZZ
 8.3
 ffuf -w /path/to/APIendpoints.txt:FUZZ1 -w /path/to/params:FUZZ2 -w /path/to/values -u https://url/FUZZ1?FUZZ2=FUZZ3
 
+9. Фаззинг с помощью http запроса
+Есть файл http.txt - с запросом
+В POST / Headers этого файла должно находится ключевое слово FUZZ, которое работает так же, как и при обычном фаззинге
+(Так же можно FUZZ поставить в url, method, но зачем?)
+ffuf -request /path/to/http.txt -w /path/to/postdatafuzz.txt
